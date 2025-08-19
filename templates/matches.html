@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Tennis Scoreboard | Finished Matches{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Matches</h1>
+        <div class="input-container">
+            <input class="input-filter" placeholder="Filter by name" type="text" />
+            <div>
+                <a href="#">
+                    <button class="btn-filter">Reset Filter</button>
+                </a>
+            </div>
+        </div>
+
+        <table class="table-matches">
+            <tr>
+                <th>Player One</th>
+                <th>Player Two</th>
+                <th>Winner</th>
+            </tr>
+            <tr>
+                <td>Rafael Nadal</td>
+                <td>Roger Federer</td>
+                <td><span class="winner-name-td">Rafael Nadal</span></td>
+            </tr>
+            <tr>
+                <td>Rafael Nadal</td>
+                <td>Roger Federer</td>
+                <td><span class="winner-name-td">Roger Federer</span></td>
+            </tr>
+            <tr>
+                <td>Rafael Nadal</td>
+                <td>Roger Federer</td>
+                <td><span class="winner-name-td">Rafael Nadal</span></td>
+            </tr>
+            <tr>
+                <td>Rafael Nadal</td>
+                <td>Roger Federer</td>
+                <td><span class="winner-name-td">Roger Federer</span></td>
+            </tr>
+            <tr>
+                <td>Rafael Nadal</td>
+                <td>Roger Federer</td>
+                <td><span class="winner-name-td">Rafael Nadal</span></td>
+            </tr>
+        </table>
+
+        <div class="pagination">
+            <a class="prev" href="#"> < </a>
+            <a class="num-page current" href="#">1</a>
+            <a class="num-page" href="#">2</a>
+            <a class="num-page" href="#">3</a>
+            <a class="next" href="#"> > </a>
+        </div>
+    </div>
+{% endblock %}
