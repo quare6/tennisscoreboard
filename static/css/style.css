@@ -507,3 +507,81 @@ footer {
 .num-page.current {
     font-weight: bold;
 }
+
+/* Пагинация */
+.pagination {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.page-link, .page-current {
+    display: inline-block;
+    padding: 8px 12px;
+    margin: 0 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #333;
+}
+
+.page-current {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.page-link:hover {
+    background-color: #f8f9fa;
+}
+
+/* Форма поиска */
+.search-form {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.search-form input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.btn-clear {
+    margin-left: 10px;
+    color: #dc3545;
+    text-decoration: none;
+}
+
+/* Таблица матчей */
+.matches-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.matches-table th, .matches-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.matches-table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+.winner {
+    font-weight: bold;
+}
+
+.winner-p1 { color: #28a745; }
+.winner-p2 { color: #dc3545; }
+
+.match-id {
+    font-family: monospace;
+    font-size: 0.9em;
+    color: #6c757d;
+}

@@ -1,8 +1,8 @@
-from player import Player
+from src.services.player import Player
 from src.database import session_factory
 from sqlalchemy import insert, select, or_
-from models.match import MatchOrm
-from models.player import PlayerOrm
+from src.models.match import MatchOrm
+from src.models.player import PlayerOrm
 from uuid import uuid4
 
 

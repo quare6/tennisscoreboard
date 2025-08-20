@@ -1,8 +1,8 @@
 
 from src.database import session_factory
 from sqlalchemy import insert
-from player import Player
-from models.player import PlayerOrm
+from src.services.player import Player
+from src.models.player import PlayerOrm
 
 class PlayerSerivice:
 
@@ -18,3 +18,13 @@ class PlayerSerivice:
                 session.commit()
             
             return Player(db_player.Name, db_player.ID)
+    
+    @staticmethod
+    def update_stats(player_id: int, wins: int = 0, loses: int = 0, games: int = 0):
+        with session_factory() as session:
+            player = session.get(PlayerOrm, player_id)
+            if player:
+                player.Wins += wins
+                player.Loses += loses
+                player.Games += games
+                session.commit()

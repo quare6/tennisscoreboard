@@ -1,7 +1,7 @@
 from sqlalchemy import select, or_
 
-from models.match import MatchOrm
-from models.player import PlayerOrm
+from src.models.match import MatchOrm
+from src.models.player import PlayerOrm
 from src.database import session_factory
 
 class SearchMatch:
@@ -11,7 +11,7 @@ class SearchMatch:
         with session_factory() as session:
 
             player_stmt = select(PlayerOrm.ID).where(PlayerOrm.Name == name)
-            player_id =  session.execute(player_stmt).scalar().first()
+            player_id =  session.execute(player_stmt).scalar()
 
             if not player_id:
                 raise # хз какую ошибку

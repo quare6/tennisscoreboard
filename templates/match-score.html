@@ -6,9 +6,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap" rel="stylesheet">
 {% endblock %}
 
-{% block content %}
+<!--Тут сделать проверку на то если завершен матч то просто показывать его счет--> 
+
+<!-- {% block content %}
     <div class="container">
-        <h1>Current match</h1>
+        <h1>Current match: {{ player1.name }} vs {{ player2.name }}</h1>
+        <div class="current-score">
+            <h2>Set {{ current_set }}</h2>
+            <p>Score: {{ player1.games }} - {{ player2.games }}</p>
+            {% if player1.advantage %}
+                <p>Advantage: {{ player1.name }}</p>
+            {% elif player2.advantage %}
+                <p>Advantage: {{ player2.name }}</p>
+            {% endif %}
+        </div>
         <div class="current-match-image"></div>
         <section class="score">
             <table class="table">
@@ -43,4 +54,73 @@
             </table>
         </section>
     </div>
+{% endblock %} -->
+
+{% block content %}
+<div class="container">
+    <h1>Current match: {{ player1.name }} vs {{ player2.name }}</h1>
+    
+    {% if match_finished %}
+    <div class="match-completed">
+        <h2>🎾 Match Completed! 🎾</h2>
+        <p>Winner: {{ winner }}</p>
+        <p>Final Score: 
+            {% for set_name, score in score.items() %}
+            Set {{ loop.index }}: {{ score[0] }}-{{ score[1] }}{% if not loop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+        <a href="/new-match" class="btn">Start New Match</a>
+    </div>
+    {% endif %}
+    
+    <section class="score">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Player</th>
+                <th>Sets</th>
+                <th>Games</th>
+                <th>Points</th>
+                {% if not match_finished %}
+                <th>Action</th>
+                {% endif %}
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{{ player1.name }}</td>
+                <td>{{ player1.sets }}</td>
+                <td>{{ player1.games }}</td>
+                <td>
+                    {{ player1.points }}
+                    {% if player1.advantage %}A{% endif %}
+                </td>
+                {% if not match_finished %}
+                <td>
+                    <form action="/add-point?winner={{ player1.name }}" method="post">
+                        <button type="submit">Point for {{ player1.name }}</button>
+                    </form>
+                </td>
+                {% endif %}
+            </tr>
+            <tr>
+                <td>{{ player2.name }}</td>
+                <td>{{ player2.sets }}</td>
+                <td>{{ player2.games }}</td>
+                <td>
+                    {{ player2.points }}
+                    {% if player2.advantage %}A{% endif %}
+                </td>
+                {% if not match_finished %}
+                <td>
+                    <form action="/add-point?winner={{ player2.name }}" method="post">
+                        <button type="submit">Point for {{ player2.name }}</button>
+                    </form>
+                </td>
+                {% endif %}
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</div>
 {% endblock %}
