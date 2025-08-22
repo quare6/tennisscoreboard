@@ -8,17 +8,20 @@ def match_search(environ, start_response):
         query_string = environ.get('QUERY_STRING', '')
         query_params = parse_qs(query_string)
 
-        page = int(query_params.get('page', [1]))[0]
+        # print(query_params.get('page', [1]))
+        page = int(query_params.get('page', [1])[0])
         player_name = query_params.get('player_name', [''])[0].strip()
-        matches_per_page = 10
+        matches_per_page = 3
 
         if player_name:
             matches = SearchMatch.by_name(player_name)
+            
         else:
             matches = SearchMatch.all()
         
         total_matches = len(matches)
-        total_pages = (total_matches + matches_per_page - 1) // matches
+        total_pages = max(1, (total_matches + matches_per_page - 1) // matches_per_page)
+
         start_idx = (page - 1) * matches_per_page
         end_idx = start_idx + matches_per_page
         paginated_matches = matches[start_idx:end_idx]

@@ -10,4 +10,4 @@ engine = create_engine(
 )
 
 
-session_factory = sessionmaker(engine)
+session_factory = sessionmaker(bind=engine)

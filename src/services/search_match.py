@@ -1,4 +1,5 @@
 from sqlalchemy import select, or_
+from sqlalchemy.orm import joinedload
 
 from src.models.match import MatchOrm
 from src.models.player import PlayerOrm
@@ -11,18 +12,29 @@ class SearchMatch:
         with session_factory() as session:
 
             player_stmt = select(PlayerOrm.ID).where(PlayerOrm.Name == name)
-            player_id =  session.execute(player_stmt).scalar()
+            player_id = session.execute(player_stmt).scalar()
 
             if not player_id:
-                raise # хз какую ошибку
+                return []
 
-            stmt = select(MatchOrm).where(or_(MatchOrm.Player1 == player_id, MatchOrm.Player2 == player_id))
-            result = session.execute(stmt).scalars().all()
+            stmt = select(MatchOrm).options(
+                joinedload(MatchOrm.player1_rel),
+                joinedload(MatchOrm.player2_rel),
+                joinedload(MatchOrm.winner_rel)
+            ).where(
+                or_(MatchOrm.Player1 == player_id, MatchOrm.Player2 == player_id))
+            
+            result = session.execute(stmt).unique().scalars().all()
+            
             return result
     
     @staticmethod
     def all() -> list:
         with session_factory() as session:
-            stmt = select(MatchOrm)
-            result = session.execute(stmt).scalars().all()
+            result = session.query(MatchOrm).options(
+                joinedload(MatchOrm.player1_rel),
+                joinedload(MatchOrm.player2_rel),
+                joinedload(MatchOrm.winner_rel)
+            ).all()
+            result = session.query(MatchOrm).all()
             return result

@@ -10,8 +10,8 @@
     <div class="search-form">
         <form method="get" action="/matches">
             <input type="hidden" name="page" value="1">
-            <label for="filter_by_player_name">Filter by Player:</label>
-            <input type="text" id="filter_by_player_name" name="filter_by_player_name" 
+            <label for="player_name">Filter by Player:</label>
+            <input type="text" id="player_name" name="player_name" 
                    placeholder="Enter player name"
                    value="{{ player_name_filter }}">
             <button type="submit">Search</button>
@@ -35,7 +35,6 @@
         <table class="matches-table">
             <thead>
                 <tr>
-                    <th>Date</th>
                     <th>Player 1</th>
                     <th>Player 2</th>
                     <th>Winner</th>
@@ -46,7 +45,6 @@
             <tbody>
                 {% for match in matches %}
                 <tr>
-                    <td>{{ match.date }}</td>
                     <td>{{ match.player1_name }}</td>
                     <td>{{ match.player2_name }}</td>
                     <td class="winner {% if match.winner_name == match.player1_name %}winner-p1{% else %}winner-p2{% endif %}">

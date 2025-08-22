@@ -1,5 +1,5 @@
 from src.models.base import Base
-from src.models.player import PlayerOrm
+# from src.models.player import PlayerOrm
 
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import ForeignKey, JSON
@@ -10,9 +10,9 @@ class MatchOrm(Base):
 
     ID: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     UUID: Mapped[str] = mapped_column(unique=True)
-    Player1: Mapped[int] = mapped_column(ForeignKey("players.id"))
-    Player2: Mapped[int] = mapped_column(ForeignKey("players.id"))
-    Winner: Mapped[int]
+    Player1: Mapped[int] = mapped_column(ForeignKey("players.ID"))
+    Player2: Mapped[int] = mapped_column(ForeignKey("players.ID"))
+    Winner: Mapped[int] = mapped_column(ForeignKey("players.ID"))
     Score: Mapped[dict] = mapped_column(JSON)
 
     player1_rel: Mapped["PlayerOrm"] = relationship(

@@ -1,5 +1,5 @@
 from src.models.base import Base
-from src.models.match import MatchOrm
+# from src.models.match import MatchOrm
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import Index
 
@@ -13,7 +13,7 @@ class PlayerOrm(Base):
     Loses: Mapped[int] 
 
     __table_args__ = (
-        Index("ix_players_name", "Name")
+        Index("ix_players_name", "Name"),
     )
 
     matches_as_player1: Mapped[list["MatchOrm"]] = relationship(

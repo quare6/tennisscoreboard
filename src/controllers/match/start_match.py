@@ -7,7 +7,9 @@ from src.controllers.get_session import get_session_id
 
 
 def match(environ, start_response):
-    session_id = get_session_id(environ)
+    # session_id = get_session_id(environ)
+    session_id = environ.get('SESSION_ID')
+
     if not session_id:
         start_response('302 Found', [
             ('Location', '/new-match'), 
@@ -16,7 +18,7 @@ def match(environ, start_response):
 
     if environ['REQUEST_METHOD'] == 'POST':
         try:
-            request_body_size = int(environ.get(["CONTENT_LENGTH"], 0))
+            request_body_size = int(environ.get("CONTENT_LENGTH", 0))
         except ValueError:
             request_body_size = 0
 
@@ -24,10 +26,10 @@ def match(environ, start_response):
 
     post_data = parse_qs(request_body)
 
-    player1 = post_data.get('player1', [''])[0].strip()
-    player2 = post_data.get('player2', [''])[0].strip()
+    player1 = post_data.get('playerOne', [''])[0].strip()
+    player2 = post_data.get('playerTwo', [''])[0].strip()
 
-    match = MatchService.create_match(player1_name=player1, player2_name=player2)
+    match = MatchService.create_match(player1_name=player1, player2_name=player2, session_id=session_id)
     context = match.get_score_display()
 
     html = render_template("match-score.html", context=context)

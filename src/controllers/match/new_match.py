@@ -1,4 +1,4 @@
-from views.render import render_template
+from src.views.render import render_template
 
 def new_match(environ, start_response):
     html = render_template("new-match.html")

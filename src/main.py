@@ -10,10 +10,10 @@ from src.controllers.match.add_point import add_point
 from src.controllers.match.matches import match_search
 from src.models.base import Base
 from src.database import engine
+from src.middlewares.session_middleware import SessionMiddleware
 
 from whitenoise import WhiteNoise
 
-sys.path.append(str(Path(__file__).parent.parent))
 
 def init_database():
     Base.metadata.create_all(bind=engine)
@@ -44,8 +44,11 @@ def application(environ, start_response):
         start_response('404 Not Found', [('Content-Type', 'text/plain')])
         return [b'404 Not Found']
 
-app = WhiteNoise(application)
-app.add_files('static', prefix='static/')  # указываем папку со статикой
+base_app = application
+session_app = SessionMiddleware(base_app)
+
+app = WhiteNoise(session_app, root='static', prefix='/static/')
+# app.add_files('static', prefix='static/')  # указываем папку со статикой
 
 if __name__ == '__main__':
     with make_server('', 8000, app) as httpd:

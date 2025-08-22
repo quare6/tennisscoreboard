@@ -12,14 +12,22 @@ class Match:
         self.current_set = 1
         self.is_match_finished = False
     
-    def add_point(self, winner_name: str) -> None:
+    def add_points(self, winner_name: str) -> None:
+        print(f"DEBUG: add_point called for {winner_name}")
         if winner_name == self.player1.name:
             winner = self.player1
             loser = self.player2
-        else:
+            print("DEBUG: Winner is player1")
+
+        elif winner_name == self.player2.name:
             winner = self.player2
             loser = self.player1
+            print("DEBUG: Winner is player2")
+        else:
+            print(f"DEBUG: ERROR! Unknown winner: {winner_name}")
             
+        print(f"DEBUG: Before - Winner: {winner.points}, Loser: {loser.points}")
+
         if winner.points == 40 and loser.points == 40:
             if loser.has_advantage:
                 loser.has_advantage = False
@@ -39,6 +47,8 @@ class Match:
             winner.points = 40
         elif winner.points == 40:
             self.add_game(winner, loser)
+        
+        print(f"DEBUG: After - Winner: {winner.points}, Loser: {loser.points}")
 
         return None
     
@@ -52,8 +62,8 @@ class Match:
 
         self.score[f'set{self.current_set}'] = [winner.games, loser.games]
 
-        if winner.games >= 6 and winner.games - loser.games == 2:
-            winner.add_set(winner, loser)
+        if winner.games >= 6 and winner.games - loser.games >= 2:
+            self.add_set(winner, loser)
     
     def add_set(self, winner: Player, loser: Player):
         winner.sets += 1
@@ -64,8 +74,10 @@ class Match:
         winner.games = 0
         loser.games = 0
 
-        if winner.sets == 2:
+        if winner.sets >= 2:
             self.finish_match(winner, loser)
+        else:
+            print(f"DEBUG: Match continues. Sets: {winner.sets}-{loser.sets}")
     
     def finish_match(self, winner, loser):
         self.is_match_finished = True
